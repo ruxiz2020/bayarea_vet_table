@@ -1,0 +1,9 @@
+﻿hospital_name,doctor_name,city,comment,breed,rating,disease
+Crystal Springs Pet Hospital, Dr Margaret Hoppe,San Mateo,Dr. Hoppe和诊所的员工都很有耐心。看诊之后有点问题给诊所打电话，Dr. Hoppe直接让把猫猫现状照片发到她的个人手机上，态度真的很认真。而且他们一周七天上班，相比附近的其他几个诊所相对好约。,猫,5,上呼吸道感染
+Animal Cove, Dr. Robin Heagy (这家医院只有两个兽医，另外一个Dr Chris Cowing老爷爷最近脚崴了，不上班）,Foster City,Dr. Heagy人很好很有经验。但他们只有周内开门，而且现在只有一个医生，非常不好预约。而且可能因为人手不够，staff接电话很不耐烦，预约系统很混乱（第一次约好了时间，结果前一天收到电话说他们第二天要关门，让我重新预约；第二次本来打电话约好时间，结果再打去说系统里没有我的名字，又要重新预约；最后实在等不了那么久就去了别家，打电话取消预约，结果之后又收到电话让确认预约，系统里并没有取消...）,猫,3,皮肤过敏
+VCA San Carlos Animal Hospital (El Camino Real), Dr. John Gorzynski,San Carlos,他们周末的坐诊医生Dr. John Gorzynski貌似是个实习医生，经验不足，我猫嘴附近肿泡，他说是严重痤疮，打了一针抗生素并没好，只能带去另一家Animal Cove才诊断说是皮肤过敏，开了类固醇才控制住。,猫,1,皮肤过敏
+SPCA Hopsital (Mission), Dr. Lindsey Meyer,SF,Dr Meyer很有耐心，对小猫需要注射的各种疫苗都解释的很清楚。,猫,4,Wellness 
+Pinole Pet Hospital, Dr. Jennifer Liang,Pinole,医生做了一系列检查， 强烈建议手术。医生的建议有误导。,狗,2,误食异物
+Campus Vet Clinic, Dr. Patrick Pierson,Berkeley,我的pugs一直都在Dr. Pierson的care下，有大约5年了。很良心又很有耐心的医生，不必要的检查，药和手术不会推荐，而且平时如果有last minute的需求，一般都会试着挤出时间。沟通也非常顺畅，不少护士都很有爱，是一家family-owned clinic，强烈推荐。但是这里的Dr. Lee我无法推荐，看了一次，感觉刚毕业经验不足，连我的狗都碰不到,狗,5,"Wellness, 绝育, 外伤/皮肤, 肛门腺问题, Anxeity"
+University Vet Hospital, Dr. Fosbender,Berkeley,"Dr. Fosbender本身是很好的，有耐心，检查的很全面仔细，沟通也很好。但是这个clinic的wellness方面比较pushy, 一年会让你做不少常规检查，费用感觉也不少。因为我的狗子年龄有点大，有心脏病，因为他们检查的仔细就留在这家clinic",狗,4,"Wellness, 心脏病，耳朵异物&发炎"
+VCA Animal Care Clinic,,El Sobrante,"这家clinic整个差评。我的狗子在领养期间在这里治疗heartworm。在别的clinic都没事，但是一到这个clinic就会吓得小便失禁。而且这里的owner当时给她开药，竟然开了一种和她当时服用的药不能混合（都是他们开的药), 如果混合会导致胃出血的药。太不负责任！不仅要等很久，而且护士会问你一些“你的狗现在都吃什么药”之类的你以为作为医院应该知道的问题。千万不要去！！",狗,1,Heartworm
