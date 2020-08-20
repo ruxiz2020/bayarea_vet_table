@@ -31,7 +31,7 @@ city_list = df_city["city_name"].unique()
 breed_list = ['Cat', 'Dog', 'Bird', 'Rodent', 'Rabbit', 'Snake', "Other"]
 
 df_review = pd.read_csv(DATA_PATH.joinpath("vet_review.csv"))
-print(df_review.to_dict(orient='records'))
+#print(df_review.to_dict(orient='records'))
 params = df_review.columns
 table_city_list = df_review["city"].unique()
 
@@ -117,7 +117,7 @@ def generate_control_card():
 app.layout = html.Div(
     id="app-container",
     children=[
-        html.Div(id='intermediate-value', style={'display': 'none'}),
+        #html.Div(id='intermediate-value', style={'display': 'none'}),
         # Banner
         html.Div(
             id="banner",
@@ -154,11 +154,12 @@ app.layout = html.Div(
                             'whiteSpace': 'normal',
                             'height': 'auto',  # wrapped text in column
                             'textAlign': 'left',
-                            'overflowY': 'auto',
-                            # 'overflowX': 'auto',
+                            #'overflowY': 'auto',
+                            'overflowX': 'auto',
                             'fontSize': 12,
                             'font-family': 'sans-serif',
-                            'minWidth': '20px',
+                            'minWidth': '40px',
+                            'maxHeight': '40px',
                         },
                         style_data={
                             'maxHeight': '50px',
@@ -166,9 +167,9 @@ app.layout = html.Div(
                             # 'textOverflow': 'ellipsis',
                         },
                         style_table={
-                            'maxHeight': '80ex',
+                            'maxHeight': '100%',
                             'width': '100%',
-                            'maxWidth': '100%',
+                            'maxWidth': '200%',
                         },
                         # style header
                         style_header={
@@ -184,12 +185,12 @@ app.layout = html.Div(
                                 'width': '260px',
                             },
                             {
-                                'if': {'column_id': 'hospital_name'},
-                                'width': '10px',
+                                'if': {'column_id': 'hospital'},
+                                'width': '22px',
                             },
                             {
-                                'if': {'column_id': 'doctor_name'},
-                                'width': '10px',
+                                'if': {'column_id': 'doctor'},
+                                'width': '22px',
                             },
                             {
                                 'if': {'column_id': 'city'},
@@ -216,7 +217,7 @@ app.layout = html.Div(
                                 'if': {
                                     # comparing columns to each other
                                     'filter_query': '{rating} = 5',
-                                    'column_id': 'hospital_name'
+                                    'column_id': 'hospital'
                                 },
                                 'backgroundColor': '#3EA055',
                                 'color': 'white',
@@ -225,7 +226,7 @@ app.layout = html.Div(
                                 'if': {
                                     # comparing columns to each other
                                     'filter_query': '{rating} = 4',
-                                    'column_id': 'hospital_name'
+                                    'column_id': 'hospital'
                                 },
                                 'backgroundColor': '#F3E5AB',
                             },
@@ -233,7 +234,7 @@ app.layout = html.Div(
                                 'if': {
                                     # comparing columns to each other
                                     'filter_query': '{rating} = 2',
-                                    'column_id': 'hospital_name'
+                                    'column_id': 'hospital'
                                 },
                                 'backgroundColor': '#F5F5DC',
                             },
@@ -241,7 +242,7 @@ app.layout = html.Div(
                                 'if': {
                                     # comparing columns to each other
                                     'filter_query': '{rating} = 3',
-                                    'column_id': 'hospital_name'
+                                    'column_id': 'hospital'
                                 },
                                 'backgroundColor': '#736F6E',
                                 'color': 'white',
@@ -250,7 +251,7 @@ app.layout = html.Div(
                                 'if': {
                                     # comparing columns to each other
                                     'filter_query': '{rating} = 1',
-                                    'column_id': 'hospital_name'
+                                    'column_id': 'hospital'
                                 },
                                 'backgroundColor': '#2C3539',
                                 'color': 'white',
@@ -260,13 +261,14 @@ app.layout = html.Div(
                             [{'id': p, 'name': p} for p in params]
                         ),
                         data=df_review.to_dict(orient='records'),
+                        fixed_rows={ 'headers': True, 'data': 0 },
                         editable=True,
                         filter_action='native',
                         sort_action='native',
                         sort_mode='multi',
                         # page_action='native',
                         # page_size=10,
-                        virtualization=True,
+                        #virtualization=True,
                         page_action='none',
                         # row_selectable="multi",
                         row_deletable=True,
@@ -298,8 +300,8 @@ def update_table(hospital, doctor, city, breed,
                  disease, rating, comment):
 
     dict_new_review = {}
-    dict_new_review['hospital_name'] = hospital
-    dict_new_review['doctor_name'] = doctor
+    dict_new_review['hospital'] = hospital
+    dict_new_review['doctor'] = doctor
     dict_new_review['city'] = city
     dict_new_review['breed'] = breed
     dict_new_review['disease'] = disease
