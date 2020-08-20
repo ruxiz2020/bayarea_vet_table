@@ -2,13 +2,15 @@ import dash
 import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, ClientsideFunction
+from dash.dependencies import Input, Output, State
 
 import numpy as np
 import pandas as pd
 import datetime
 from datetime import datetime as dt
 import pathlib
+from io import StringIO
+import boto3
 
 app = dash.Dash(
     __name__,
@@ -34,6 +36,23 @@ df_review = pd.read_csv(DATA_PATH.joinpath("vet_review.csv"))
 #print(df_review.to_dict(orient='records'))
 params = df_review.columns
 table_city_list = df_review["city"].unique()
+
+
+
+def write_csv_to_s3(df, outfilename="test.csv"):
+
+    bucket = "bayarea-vet-review"
+    region_name = "us-west-1"
+    aws_access_key_id = "AKIARXCEGLG32O4BXR4G"
+    aws_secret_access_key = "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"
+    s3 = boto3.client("s3",\
+                  region_name=region_name,\
+                  aws_access_key_id=aws_access_key_id,\
+                  aws_secret_access_key=aws_secret_access_key)
+    csv_buf = StringIO()
+    df.to_csv(csv_buf, header=True, index=False, encoding='UTF_8')
+    csv_buf.seek(0)
+    s3.put_object(Bucket=bucket, Body=csv_buf.getvalue(), Key='vet_reviews/' + outfilename)
 
 
 def generate_control_card():
@@ -106,9 +125,9 @@ def generate_control_card():
             ),
             html.Br(),
             html.Div(
-                id="reset-btn-outer",
+                id="submit-btn-outer",
                 children=html.Button(
-                    id="reset-btn", children="Submit", n_clicks=0),
+                    id="submit-btn", children="Submit", n_clicks=0),
             ),
         ],
     )
@@ -144,7 +163,11 @@ app.layout = html.Div(
             children=[
                 # Patient Volume Heatmap
                 html.Br(),
-                html.P("Veterinary reviews"),
+                html.H6("Veterinary reviews"),
+                html.P("You can: "),
+                html.P("    1. Fill out and submit the form to add a row or,"),
+                html.P(
+                    "    2. Click on the X on each row to delete a row from the table."),
 
                 html.Div([
 
@@ -152,17 +175,18 @@ app.layout = html.Div(
                         id='review_table',
                         style_cell={
                             'whiteSpace': 'normal',
-                            'height': 'auto',  # wrapped text in column
+                            # 'height': 'auto',  # wrapped text in column
                             'textAlign': 'left',
-                            #'overflowY': 'auto',
+                            'overflowY': 'auto',
                             'overflowX': 'auto',
                             'fontSize': 12,
                             'font-family': 'sans-serif',
                             'minWidth': '40px',
-                            'maxHeight': '40px',
+                            'maxHeight': '100px',
+                            'padding': '8px',
                         },
                         style_data={
-                            'maxHeight': '50px',
+                            'maxHeight': '100px',
                             # 'width': '150px', 'minWidth': '150px', 'maxWidth': '200px',
                             # 'textOverflow': 'ellipsis',
                         },
@@ -170,6 +194,7 @@ app.layout = html.Div(
                             'maxHeight': '100%',
                             'width': '100%',
                             'maxWidth': '200%',
+                            'margin': '8px',
                         },
                         # style header
                         style_header={
@@ -261,31 +286,41 @@ app.layout = html.Div(
                             [{'id': p, 'name': p} for p in params]
                         ),
                         data=df_review.to_dict(orient='records'),
-                        fixed_rows={ 'headers': True, 'data': 0 },
-                        editable=True,
+                        fixed_rows={'headers': True, 'data': 0},
+                        editable=False,
                         filter_action='native',
                         sort_action='native',
                         sort_mode='multi',
                         # page_action='native',
                         # page_size=10,
-                        #virtualization=True,
+                        # virtualization=True, # this returns error
                         page_action='none',
                         # row_selectable="multi",
                         row_deletable=True,
                     ),
-                    # dcc.Graph(id='table-editing-simple-output')
+                    html.Div(id='output-table'),
+                    html.Br(),
 
-                ]
+                    #html.Div(children=[
+                    #    html.A("Download CSV", href="/download_excel/",
+                    #           id='download-link',
+                    #           download="bay_vet_reviews.csv",
+                    #           target="_blank"),
+                    #], ),
+                ],
                 ),
             ],
-        ),
+
+        ), # end of right-column
     ],
 
 )
 
+# for adding a row
+
 
 @app.callback(
-    Output('intermediate-value', 'children'),
+    Output('review_table', 'data'),
     [
         Input("hospital-name", "value"),
         Input("doctor-name", "value"),
@@ -294,24 +329,65 @@ app.layout = html.Div(
         Input("disease-name", "value"),
         Input("rating-select", "value"),
         Input("detail-comments", "value"),
+        Input("submit-btn", "n_clicks"),
     ]
 )
 def update_table(hospital, doctor, city, breed,
-                 disease, rating, comment):
+                 disease, rating, comment, submit_click):
 
-    dict_new_review = {}
-    dict_new_review['hospital'] = hospital
-    dict_new_review['doctor'] = doctor
-    dict_new_review['city'] = city
-    dict_new_review['breed'] = breed
-    dict_new_review['disease'] = disease
-    dict_new_review['rating'] = rating
-    dict_new_review['comment'] = comment
+    df_review = pd.read_csv(DATA_PATH.joinpath("vet_review.csv"))
 
-    #df_review = df_review.append(dict_new_review, ignore_index=True)
+    if submit_click > 0:
+        dict_new_review = {}
+        dict_new_review['hospital'] = hospital
+        dict_new_review['doctor'] = doctor
+        dict_new_review['city'] = city
+        dict_new_review['breed'] = breed
+        dict_new_review['disease'] = disease
+        dict_new_review['rating'] = rating
+        dict_new_review['comment'] = comment
 
-    #return df_review.to_dict(orient='records')
+        df_review = df_review.append(dict_new_review, ignore_index=True)
 
+        df_review.to_csv(DATA_PATH.joinpath("vet_review.csv"), index=False)
+        write_csv_to_s3(df_review, outfilename="vet_review.csv")
+
+    return df_review.to_dict(orient='records')
+
+
+# for deleting a row
+@app.callback(Output('output-table', 'children'),
+              [Input('review_table', 'data_previous')],
+              [State('review_table', 'data')])
+def show_removed_rows(previous, current):
+    if previous is None:
+        dash.exceptions.PreventUpdate()
+    else:
+        # archive previous
+        now = datetime.datetime.now()
+        #pd.DataFrame(previous).to_csv(DATA_PATH.joinpath(now.strftime("%Y_%b_%d_%A_%I_%M_%S_%f") + "vet_review.csv.gz"),
+        #                              index=False, compression="gzip")
+        write_csv_to_s3(pd.DataFrame(previous),
+                        outfilename=now.strftime("%Y_%b_%d_%A_%I_%M_%S_%f") + "vet_review.csv")
+        # archive current
+        pd.DataFrame(current).to_csv(
+            DATA_PATH.joinpath("vet_review.csv"), index=False)
+        write_csv_to_s3(pd.DataFrame(current), outfilename="vet_review.csv")
+        return [f'Just removed {row}' for row in previous if row not in current]
+
+
+
+@app.callback(
+    Output('download-link', 'href'),
+    [Input('download-link', 'children')])
+def generate_csv(filter_value):
+    import urllib
+
+    df_review = pd.read_csv(DATA_PATH.joinpath("vet_review.csv"))
+    csv_string = df_review.to_csv(index=False, encoding='utf-8') # not working with chinese characters
+    csv_string = "data:text/csv;charset=utf-8," + \
+        urllib.parse.quote(csv_string)
+    return csv_string
 
 # Run the server
 if __name__ == "__main__":
