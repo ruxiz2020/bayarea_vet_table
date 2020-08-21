@@ -368,7 +368,7 @@ def show_removed_rows(previous, current):
         #pd.DataFrame(previous).to_csv(DATA_PATH.joinpath(now.strftime("%Y_%b_%d_%A_%I_%M_%S_%f") + "vet_review.csv.gz"),
         #                              index=False, compression="gzip")
         write_csv_to_s3(pd.DataFrame(previous),
-                        outfilename=now.strftime("%Y_%b_%d_%A_%I_%M_%S_%f") + "vet_review.csv")
+                        outfilename=now.strftime("%Y_%b_%d_%A_%I_%M_%S") + "vet_review.csv")
         # archive current
         pd.DataFrame(current).to_csv(
             DATA_PATH.joinpath("vet_review.csv"), index=False)
