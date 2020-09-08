@@ -14,8 +14,8 @@ We suggest you to create a virtual environment for running this app with Python 
 and open your terminal/command prompt in the root folder.
 
 ```
-git clone https://github.com/plotly/dash-sample-apps
-cd dash-sample-apps/apps/dash-clinical-analytics
+git clone https://github.com/ruxiz2020/bayarea_vet_table.git
+cd bayarea_vet_table
 python3 -m virtualenv venv
 
 ```
