@@ -371,7 +371,7 @@ def show_removed_rows(previous, current):
                         outfilename=now.strftime("%Y_%b_%d_%A_%I_%M_%S") + "vet_review.csv")
         # archive current
         pd.DataFrame(current).to_csv(
-            DATA_PATH.joinpath("vet_review.csv"), index=False)
+            DATA_PATH.joinpath(now.strftime("%Y_%b_%d_%A_%I_%M_%S") + "vet_review.csv"), index=False)
         write_csv_to_s3(pd.DataFrame(current), outfilename="vet_review.csv")
         return [f'Just removed {row}' for row in previous if row not in current]
 
