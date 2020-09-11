@@ -256,7 +256,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 4',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#F3E5AB',
+                                'backgroundColor': '#FAFAD2',
                             },
                             {
                                 'if': {
@@ -264,7 +264,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 2',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#F5F5DC',
+                                'backgroundColor': '#F0F8FF',
                             },
                             {
                                 'if': {
@@ -272,7 +272,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 3',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#736F6E',
+                                'backgroundColor': '#4682B4',
                                 'color': 'white',
                             },
                             {
@@ -281,7 +281,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 1',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#2C3539',
+                                'backgroundColor': '#191970',
                                 'color': 'white',
                             },
                         ],
