@@ -153,7 +153,25 @@ H5, H3 {
     vertical-align: middle;
 }
 
+#submit-btn-outer {
+    text-align: center;
+    margin-left: 10px;
+    color: #C04000;
+    font-weight: bold;
+    font-size: 12px;
+}
+#submit-btn {
+    color: #C04000;
+    font-weight: bold;
+    font-size: 12px;
+}
 
+#reset-btn {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: lightgrey;
+}
 /*
   ##Device = Most of the Smartphones Mobiles / ipad (Portrait)
   */
@@ -190,17 +208,7 @@ H5, H3 {
         padding: 0rem 0.5rem;
     }
 
-    #submit-btn-outer {
-        text-align: center;
-        color: #C04000;
-        font-weight: bold;
-        font-size: 12px;
-    }
-    #submit-btn {
-        color: #C04000;
-        font-weight: bold;
-        font-size: 12px;
-    }
+
 
     .table-row > div {
         width: 100% !important;

@@ -126,9 +126,12 @@ def generate_control_card():
             html.Br(),
             html.Div(
                 id="submit-btn-outer",
-                children=html.Button(
-                    id="submit-btn", children="Submit", n_clicks=0),
-            ),
+                children=[
+                html.Button(id="submit-btn", children="Submit", n_clicks=0),
+                html.Button(id="reset-btn", children="Reset", n_clicks=0),
+                html.Div(id="btn-status", style=dict(height='500px',overflow='auto')),
+                ],
+            style={'marginTop':20, 'marginLeft':20}),
         ],
     )
 
@@ -317,10 +320,24 @@ app.layout = html.Div(
 )
 
 # for adding a row
+@app.callback(
+    Output("submit-btn", "n_clicks"),
+    [
+        Input("reset-btn", "n_clicks"),
+    ]
+)
+def reset_submit(reset_click):
+
+    if reset_click > 0:
+        return 0
+    else:
+        return 0
+
 
 
 @app.callback(
-    Output('review_table', 'data'),
+    [Output('review_table', 'data'),
+    Output('btn-status', 'children'),],
     [
         Input("hospital-name", "value"),
         Input("doctor-name", "value"),
@@ -337,7 +354,7 @@ def update_table(hospital, doctor, city, breed,
 
     df_review = pd.read_csv(DATA_PATH.joinpath("vet_review.csv"))
 
-    if submit_click > 0:
+    if submit_click >= 1:
         dict_new_review = {}
         dict_new_review['hospital'] = hospital
         dict_new_review['doctor'] = doctor
@@ -350,9 +367,14 @@ def update_table(hospital, doctor, city, breed,
         df_review = df_review.append(dict_new_review, ignore_index=True)
 
         df_review.to_csv(DATA_PATH.joinpath("vet_review.csv"), index=False)
-        write_csv_to_s3(df_review, outfilename="vet_review.csv")
+        now = datetime.datetime.now()
+        write_csv_to_s3(df_review, outfilename=now.strftime("%Y_%b_%d_%A_%I_%M_%S") + "vet_review.csv")
 
-    return df_review.to_dict(orient='records')
+        return [df_review.to_dict(orient='records'), "Form submitted succesfully"]
+
+    else:
+        return [df_review.to_dict(orient='records'), None]
+
 
 
 # for deleting a row
@@ -371,8 +393,9 @@ def show_removed_rows(previous, current):
                         outfilename=now.strftime("%Y_%b_%d_%A_%I_%M_%S") + "vet_review.csv")
         # archive current
         pd.DataFrame(current).to_csv(
-            DATA_PATH.joinpath(now.strftime("%Y_%b_%d_%A_%I_%M_%S") + "vet_review.csv"), index=False)
-        write_csv_to_s3(pd.DataFrame(current), outfilename="vet_review.csv")
+            DATA_PATH.joinpath("vet_review.csv"), index=False)
+        write_csv_to_s3(pd.DataFrame(current),
+                outfilename=now.strftime("%Y_%b_%d_%A_%I_%M_%S") + "vet_review.csv")
         return [f'Just removed {row}' for row in previous if row not in current]
 
 
