@@ -272,7 +272,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 3',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#4682B4',
+                                'backgroundColor': '#A9A9A9',
                                 'color': 'white',
                             },
                             {
@@ -281,7 +281,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 1',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#191970',
+                                'backgroundColor': '#696969',
                                 'color': 'white',
                             },
                         ],
