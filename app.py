@@ -247,7 +247,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 5',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#3EA055',
+                                'backgroundColor': '#006400',
                                 'color': 'white',
                             },
                             {
@@ -256,7 +256,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 4',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#FAFAD2',
+                                'backgroundColor': '#228B22',
                             },
                             {
                                 'if': {
@@ -264,7 +264,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 2',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#F0F8FF',
+                                'backgroundColor': '#9ACD32',
                             },
                             {
                                 'if': {
@@ -272,7 +272,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 3',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#A9A9A9',
+                                'backgroundColor': '#556B2F',
                                 'color': 'white',
                             },
                             {
@@ -281,7 +281,7 @@ app.layout = html.Div(
                                     'filter_query': '{rating} = 1',
                                     'column_id': 'hospital'
                                 },
-                                'backgroundColor': '#696969',
+                                'backgroundColor': '#000000',
                                 'color': 'white',
                             },
                         ],
