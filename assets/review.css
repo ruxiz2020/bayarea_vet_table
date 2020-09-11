@@ -195,8 +195,27 @@ H5, H3 {
         font-size: 2.5rem;
     }
 
+    #submit-btn-outer {
+        text-align: center;
+        margin-left: 10px;
+        color: #C04000;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    #submit-btn {
+        color: #C04000;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    #reset-btn {
+        margin-left: 10px;
+        font-weight: bold;
+        font-size: 12px;
+        background-color: lightgrey;
+    }
     #intro {
-        margin: 10px 0px;
+        margin: 5px 0px;
     }
 
     #left-column, #right-column {
