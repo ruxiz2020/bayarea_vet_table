@@ -129,7 +129,7 @@ def generate_control_card():
                 children=[
                 html.Button(id="submit-btn", children="Submit", n_clicks=0),
                 html.Button(id="reset-btn", children="Reset", n_clicks=0),
-                html.Div(id="btn-status", style=dict(height='10px',overflow='auto')),
+                html.Div(id="btn-status", style=dict(height='30px',overflow='auto')),
                 ],
             style={'marginTop':10, 'marginLeft':10}),
         ],
